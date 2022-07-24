@@ -1,0 +1,15 @@
+{
+  "name": "notion-example",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/updateBTC.js",
+  "dependencies": {
+    "@notionhq/client": "^1.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "node-fetch": "^3.2.9",
+    "websocket": "^1.0.34",
+    "ws": "^8.8.1"
+  }
+}
