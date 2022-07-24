@@ -1,10 +1,8 @@
-const dotenv = require('dotenv');
-dotenv.config();
+import dotenv from 'dotenv';
+dotenv.config({path: '../.env'});
 
-const config = {
-    host: process.env.NOTION_API_KEY,
-};
-
-module.exports = {
-    config
+export var env = {
+    notionKey: process.env.NOTION_API_KEY,
+    financialDB: process.env.FINANCING_TABLE,
+    btcBlock: process.env.BTC_DCA_PAGE_BLOCK
 }
