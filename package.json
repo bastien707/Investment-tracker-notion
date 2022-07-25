@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.0.0",
   "description": "",
-  "main": "src/updateBTC.js",
+  "main": "src/blocks.js",
   "dependencies": {
     "@notionhq/client": "^1.0.1",
     "cors": "^2.8.5",
