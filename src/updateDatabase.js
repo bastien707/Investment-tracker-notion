@@ -1,31 +1,23 @@
-import {Client} from "@notionhq/client";
 import getPriceBTC from "./getPriceBTC.js";
-import * as config from '../utility/index.js';
 
-const notion = new Client({ auth: config.env.notionKey });
-
-const getDatabase = async () => {
-    const databaseId = config.env.financialDB;
-    const response = await notion.databases.retrieve({ database_id: databaseId });
+export const getDatabase = async (notion, financialDB) => {
+    const response = await notion.databases.retrieve({ database_id: financialDB });
     console.log(response);
 };
 
-const updateCurrentAmount = async () => {
-    const databaseId = config.env.financialDB;
+export const updateCurrentAmount = async (notion, financialDB) => {
+    const BTC_PRICE = await getPriceBTC();
     return await notion.databases.update({
-        database_id: databaseId,
+        database_id: financialDB,
         properties: {
             ["Current amount value"]: {
                 formula: {
-                    expression: `prop('Amount') * ${await getPriceBTC()}`
+                    expression: `round(prop('Amount') * ${BTC_PRICE})`
                 }
             }
         }
     });
 };
-
-setInterval(updateCurrentAmount, 3000);
-
 
 
 

@@ -1,12 +1,7 @@
-import { Client } from '@notionhq/client';
-import dotenv from 'dotenv';
 import getPriceBTC from "./getPriceBTC.js";
-dotenv.config();
 
-const notion = new Client({ auth: process.env.NOTION_API_KEY });
-
-const updateBTC = async () =>  {
-    const blockId = process.env.BTC_DCA_PAGE_BLOCK;
+export const updateBTC = async (notion, block) =>  {
+    const blockId = block;
     const BTC_PRICE = await getPriceBTC()
     await notion.blocks.update({
         block_id: blockId,
@@ -14,14 +9,11 @@ const updateBTC = async () =>  {
             "rich_text": [
                 {
                     "text": {
-                        "content": `${BTC_PRICE} $`
+                        "content": `Bitcoin price : ${BTC_PRICE} $ 🔥`
                     },
                 }
             ],
-            "color": "green_background"
+            "color": "default"
         }
     });
 }
-
-
-setInterval(updateBTC, 3000);
