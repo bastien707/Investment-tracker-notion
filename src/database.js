@@ -2,21 +2,26 @@ import getPriceBTC from "./getPriceBTC.js";
 
 export const getDatabase = async (notion, financialDB) => {
     const response = await notion.databases.retrieve({ database_id: financialDB });
-    console.log(response);
+    console.log(response.properties);
 };
 
-export const updateCurrentAmount = async (notion, financialDB) => {
+// hidden property in database, used for formulas
+export const updateBitcoinToDatabase = async (notion, financialDB) => {
     const BTC_PRICE = await getPriceBTC();
-    return await notion.databases.update({
-        database_id: financialDB,
-        properties: {
-            ["Current amount value"]: {
-                formula: {
-                    expression: `round(prop('Amount') * ${BTC_PRICE})`
-                }
-            }
-        }
-    });
+    try {
+        return await notion.databases.update({
+            database_id: financialDB,
+            properties: {
+                ["Bitcoin"]: {
+                    formula: {
+                        expression: `${BTC_PRICE}`
+                    }
+                },
+            },
+        });
+    } catch (error) {
+        return error;
+    }
 };
 
 
