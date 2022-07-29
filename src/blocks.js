@@ -1,22 +1,65 @@
-import { getPriceBTC } from "./getPrices.js";
+import {getPriceBTC} from "./getPrices.js";
+
+export const getBlock = async (notion, blockId) => {
+    const response = await notion.blocks.retrieve({ block_id: blockId });
+    console.log(response);
+};
 
 export const updateBitcoinBlock = async (notion, block) => {
     const blockId = block;
-    const BTC_PRICE = await getPriceBTC()
+    let BTC =  await getPriceBTC();
+
     try {
-        await notion.blocks.update({
-            block_id: blockId,
-            "heading_2": {
-                "rich_text": [
-                    {
-                        "text": {
-                            "content": `Bitcoin price : ${BTC_PRICE} $`
+        if(BTC.priceChangePercent >= -2){
+            await notion.blocks.update({
+                block_id: blockId,
+                "callout": {
+                    "rich_text": [
+                        {
+                            "text": {
+                                content: `(${BTC.priceChangePercent}%) $ ${BTC.lastPrice.slice(0,9)}`
+                            },
+                            annotations: {
+                                italic: true,
+                                bold: true,
+                                color: 'green'
+                            },
                         },
-                    }
-                ],
-                "color": "default"
-            }
-        });
+                    ],
+                    icon: {
+                        external: {
+                            url: "https://cdn-icons-png.flaticon.com/512/7090/7090972.png"
+                        },
+                    },
+                    color: "green_background"
+                }
+            });
+        } else {
+            await notion.blocks.update({
+                block_id: blockId,
+                "callout": {
+                    "rich_text": [
+                        {
+                            "text": {
+                                content: `(${BTC.priceChangePercent}%) $ ${BTC.lastPrice.slice(0,9)}`
+                            },
+                            annotations: {
+                                italic: true,
+                                bold: true,
+                                color: 'red'
+                            },
+                        },
+                    ],
+                    icon: {
+                        external: {
+                            url: "https://cdn-icons-png.flaticon.com/512/7090/7090863.png"
+                        },
+                    },
+                    color: "red_background"
+                }
+            });
+        }
+
     } catch (error) {
         return error;
     }
