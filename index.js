@@ -1,13 +1,12 @@
 import { Client } from "@notionhq/client";
 import * as config from "./utility/index.js";
-import {updateBitcoinToDatabase, updateEthereumToDatabase} from "./src/database.js";
-import {getBlock, updateBitcoinBlock, updateEthereumBlock} from "./src/blocks.js";
+import { updateBitcoinToDatabase, updateEthereumToDatabase } from "./src/database.js";
+import { updateBitcoinBlock, updateEthereumBlock } from "./src/blocks.js";
 
 const notion = new Client({ auth: config.env.notionKey });
 
 const run = () => {
     try {
-        getBlock(notion, 'f081db356cdd44bba8886d6ea9a8ba22');
         setInterval(() => {
             updateBitcoinBlock(notion, config.env.btcBlock).then();
             updateBitcoinToDatabase(notion, config.env.btcTable).then();
