@@ -1,11 +1,11 @@
 import { Client } from "@notionhq/client";
 import * as config from "./utility/index.js";
 import {updateBitcoinToDatabase} from "./src/database.js";
-import { updateBitcoinBlock } from "./src/blocks.js";
+import { updateBitcoinBlock} from "./src/blocks.js";
+
 const notion = new Client({ auth: config.env.notionKey });
 
-
-function run(){
+const run = () => {
     try {
         setInterval(() => {
             updateBitcoinBlock(notion, config.env.btcBlock).then();
@@ -16,6 +16,6 @@ function run(){
     }
 }
 
-run()
+run();
 
 
