@@ -1,4 +1,4 @@
-import { getPriceBTC } from "./getPrices.js";
+import {getPriceBTC, getPriceETH} from "./getPrices.js";
 
 export const getDatabase = async (notion, financialDB) => {
     const response = await notion.databases.retrieve({ database_id: financialDB });
@@ -15,6 +15,24 @@ export const updateBitcoinToDatabase = async (notion, financialDB) => {
                 ["Bitcoin"]: {
                     formula: {
                         expression: `${BTC.lastPrice}`
+                    },
+                },
+            },
+        });
+    } catch (error) {
+        return error;
+    }
+};
+
+export const updateEthereumToDatabase = async (notion, ethTable) => {
+    const ETH = await getPriceETH();
+    try {
+        return await notion.databases.update({
+            database_id: ethTable,
+            properties: {
+                ["Ethereum"]: {
+                    formula: {
+                        expression: `${ETH.lastPrice}`
                     },
                 },
             },

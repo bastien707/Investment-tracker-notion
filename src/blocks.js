@@ -1,4 +1,4 @@
-import {getPriceBTC} from "./getPrices.js";
+import {getPriceBTC, getPriceETH} from "./getPrices.js";
 
 export const getBlock = async (notion, blockId) => {
     const response = await notion.blocks.retrieve({ block_id: blockId });
@@ -10,17 +10,16 @@ export const updateBitcoinBlock = async (notion, block) => {
     let BTC =  await getPriceBTC();
 
     try {
-        if(BTC.priceChangePercent >= -2){
+        if(BTC.priceChangePercent >= 0){
             await notion.blocks.update({
                 block_id: blockId,
                 "callout": {
                     "rich_text": [
                         {
                             "text": {
-                                content: `(${BTC.priceChangePercent}%) $ ${BTC.lastPrice.slice(0,9)}`
+                                content: `$ ${BTC.lastPrice.slice(0,9)} (${BTC.priceChangePercent}%) `
                             },
                             annotations: {
-                                italic: true,
                                 bold: true,
                                 color: 'green'
                             },
@@ -41,10 +40,67 @@ export const updateBitcoinBlock = async (notion, block) => {
                     "rich_text": [
                         {
                             "text": {
-                                content: `(${BTC.priceChangePercent}%) $ ${BTC.lastPrice.slice(0,9)}`
+                                content: `$ ${BTC.lastPrice.slice(0,9)} (${BTC.priceChangePercent}%) `
                             },
                             annotations: {
-                                italic: true,
+                                bold: true,
+                                color: 'red'
+                            },
+                        },
+                    ],
+                    icon: {
+                        external: {
+                            url: "https://cdn-icons-png.flaticon.com/512/7090/7090863.png"
+                        },
+                    },
+                    color: "red_background"
+                }
+            });
+        }
+
+    } catch (error) {
+        return error;
+    }
+}
+
+export const updateEthereumBlock = async (notion, block) => {
+    const blockId = block;
+    let ETH =  await getPriceETH();
+
+    try {
+        if(ETH.priceChangePercent >= 0){
+            await notion.blocks.update({
+                block_id: blockId,
+                "callout": {
+                    "rich_text": [
+                        {
+                            "text": {
+                                content: `$ ${ETH.lastPrice.slice(0,9)} (${ETH.priceChangePercent}%) `
+                            },
+                            annotations: {
+                                bold: true,
+                                color: 'green'
+                            },
+                        },
+                    ],
+                    icon: {
+                        external: {
+                            url: "https://cdn-icons-png.flaticon.com/512/7090/7090972.png"
+                        },
+                    },
+                    color: "green_background"
+                }
+            });
+        } else {
+            await notion.blocks.update({
+                block_id: blockId,
+                "callout": {
+                    "rich_text": [
+                        {
+                            "text": {
+                                content: `$ ${ETH.lastPrice.slice(0,9)} (${ETH.priceChangePercent}%) `
+                            },
+                            annotations: {
                                 bold: true,
                                 color: 'red'
                             },

@@ -11,12 +11,11 @@ export const getPriceBTC = async () => {
 }
 
 export const getPriceETH = async () => {
-    let response = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT');
+    let response = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=ETHUSDT');
 
-    if(response.ok){
-        let json = await response.json();
-        return json.price.slice(0,8);
+    if (!response.ok) {
+        alert("HTTP-Error in getPriceBTC: " + response.status);
     } else {
-        alert("HTTP-Error in getPriceETH: " + response.status);
+        return response.json();
     }
 }
