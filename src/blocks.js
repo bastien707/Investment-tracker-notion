@@ -1,9 +1,9 @@
-import getPriceBTC from "./getPriceBTC.js";
+import { getPriceBTC } from "./getPrices.js";
 
-export const updateBitcoinBlock = async (notion, block) =>  {
+export const updateBitcoinBlock = async (notion, block) => {
     const blockId = block;
     const BTC_PRICE = await getPriceBTC()
-    try{
+    try {
         await notion.blocks.update({
             block_id: blockId,
             "heading_2": {
@@ -18,6 +18,6 @@ export const updateBitcoinBlock = async (notion, block) =>  {
             }
         });
     } catch (error) {
-        return  error;
+        return error;
     }
 }

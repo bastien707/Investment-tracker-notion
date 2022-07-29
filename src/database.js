@@ -1,4 +1,4 @@
-import getPriceBTC from "./getPriceBTC.js";
+import { getPriceBTC } from "./getPrices.js";
 
 export const getDatabase = async (notion, financialDB) => {
     const response = await notion.databases.retrieve({ database_id: financialDB });
