@@ -8,5 +8,7 @@ export var env = {
     btcBlock: process.env.BTC_CALLOUT_BLOCK,
     btcPage: process.env.BTC_DCA_PAGE,
     ethTable: process.env.ETH_TABLE,
-    ethBlock: process.env.ETH_CALLOUT_BLOCK
+    ethBlock: process.env.ETH_CALLOUT_BLOCK,
+    egldBlock: process.env.EGLD_CALLOUT_BLOCK,
+    egldTable: process.env.EGLD_TABLE
 }

@@ -19,3 +19,13 @@ export const getPriceETH = async () => {
         return response.json();
     }
 }
+
+export const getPriceEGLD = async () => {
+    let response = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=EGLDUSDT');
+
+    if (!response.ok) {
+        alert("HTTP-Error in getPriceBTC: " + response.status);
+    } else {
+        return response.json();
+    }
+}
