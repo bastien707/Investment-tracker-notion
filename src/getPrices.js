@@ -14,7 +14,7 @@ export const getPriceETH = async () => {
     let response = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=ETHUSDT');
 
     if (!response.ok) {
-        alert("HTTP-Error in getPriceBTC: " + response.status);
+        alert("HTTP-Error in getPriceETH: " + response.status);
     } else {
         return response.json();
     }
@@ -24,7 +24,7 @@ export const getPriceEGLD = async () => {
     let response = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=EGLDUSDT');
 
     if (!response.ok) {
-        alert("HTTP-Error in getPriceBTC: " + response.status);
+        alert("HTTP-Error in getPriceEGLD: " + response.status);
     } else {
         return response.json();
     }
