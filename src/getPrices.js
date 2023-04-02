@@ -12,7 +12,6 @@ export const getPriceBTC = async () => {
 
 export const getPriceETH = async () => {
     let response = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=ETHUSDT');
-
     if (!response.ok) {
         alert("HTTP-Error in getPriceETH: " + response.status);
     } else {
@@ -25,6 +24,16 @@ export const getPriceEGLD = async () => {
 
     if (!response.ok) {
         alert("HTTP-Error in getPriceEGLD: " + response.status);
+    } else {
+        return response.json();
+    }
+}
+
+export const getPriceUOS = async () => {
+    let response = await fetch('https://api.kucoin.com/api/v1/market/stats?symbol=UOS-USDT');
+
+    if (!response.ok) {
+        alert("HTTP-Error in getPriceUOS: " + response.status);
     } else {
         return response.json();
     }
